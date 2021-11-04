@@ -27,6 +27,7 @@ struct card{
 struct pair{
 	card a;
 	card b;
+	enum bullshit=pair(card(-1),card(-1));
 }
 alias zone=intstore;
 

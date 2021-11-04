@@ -19,7 +19,8 @@ int rotateiter(int i){
 void main(){
 	mixin makecolors!();
 	loaddefualtcolors;
-	game_ game; game.init;
+	import undomachine;
+	undo!(game_,10) game; game.init;
 	delayassign!int input;
 	int stacking=0;
 	//game.p.getpile(0).writeln;
@@ -56,9 +57,7 @@ void main(){
 				}
 			}
 			if(IsKeyPressed(KeyboardKey.KEY_Z)){
-				//drawpile_.active.writeln;
-				//drawpile_+=neg(drawpile_.active);
-				//drawpile_.active.writeln;
+				game--;
 			}
 			if(IsKeyPressed(KeyboardKey.KEY_F10)){
 				//debug_= ! debug_;

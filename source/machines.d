@@ -2,6 +2,8 @@
 mixin template machineopoverloads(){
 	void opUnary(string s:"++")(){
 		this.poke;}
+	void opUnary(string s:"--")(){
+		this.pull;}
 	//import std.traits;
 	//static if(hasMember!(this,"get")){
 	//static if(__traits(hasMember,this,"get")){
@@ -54,6 +56,8 @@ unittest{
 	foo+=neg(1);
 	foo.writeln;
 }
+template bullshitof(T){
+	enum bullshitof=T.bullshit;}
 template bullshitof(T:int){
 	enum bullshitof=int.min;}
 bool isbullshit(int i){
@@ -73,5 +77,18 @@ struct delayassign(T){
 		if(current.isbullshit){current=a;}
 		future=a;
 	}
+	mixin machineopoverloads!();
+}
+struct parroit(T){
+	T[] store;
+	T get(){
+		if(store.length==0){return bullshitof!T;}
+		return store[0];
+	}
+	void poke(){
+		if(store.length>0){
+			store=store[1..$];}}
+	bool iserror(){return store.length==0;}
+	void give(T a){store~=a;}
 	mixin machineopoverloads!();
 }
