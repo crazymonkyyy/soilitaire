@@ -87,6 +87,7 @@ struct drawpile{
 	}
 	int active(){
 		if(draw.store.length==0 || many==0){return -1;}
+		if(which+many-1>=draw.store.length){"Im confused".writeln;return -1;}
 		return draw.store[which+many-1];
 	}
 	tri valid(pair p){
@@ -176,7 +177,7 @@ struct piles{
 		return pos(-1,-1);
 	}
 	void unverified(pair p){
-		import std.stdio;"pile to pile move".writeln;
+		//import std.stdio;"pile to pile move".writeln;
 		pos a=where(p.a);
 		pos b=where(p.b);
 		if(a.x==b.x){return;}
@@ -190,7 +191,7 @@ struct piles{
 	void fliptops(){
 		foreach(i,ref d;depths){
 			d=min(d,zones[i].store.length-1);
-			zones[i].store.length.writeln;
+			//zones[i].store.length.writeln;
 	}}
 	void give(neg a){
 		foreach(ref z;zones){
@@ -217,7 +218,7 @@ struct endzone{
 	auto fakecards(){
 		return endzone_(zone([52,52+13,52+26,52+39]),380,100);}
 	bool has(card c){
-		if(c.i>51){"ace".writeln;return true;}
+		if(c.i>51){return true;}
 		return z.has(c.i);
 	}
 	void give(int i){
@@ -260,7 +261,7 @@ struct game_{
 		}
 	}
 	void give(pair pair_){
-		import std.stdio;pair_.writeln;
+		//import std.stdio;pair_.writeln;
 		stackstyle(pair_).writeln;
 		pair_.a.rank.writeln("rank");
 		pair_.a.suit.writeln("suit");
@@ -282,8 +283,15 @@ struct game_{
 			case 2:
 				if( ! e.has(pair_.b)){return;}
 				if(e.has(pair_.a)){return;}
-				if(p.has(pair_.a)){p+=neg(pair_.a.i);assert(! p.has(pair_.a));}
-				if(d.has(pair_.a)){d+=neg(pair_.a.i);}
+				if(p.has(pair_.a)){
+					if(! p.top(pair_.a)){ return;}
+					p+=neg(pair_.a.i);
+					assert(! p.has(pair_.a));
+				}
+				if(d.has(pair_.a)){
+					if(d.active!=pair_.a.i){return;}
+					d+=neg(pair_.a.i);
+				}
 				e+=pair_.a.i;
 				break;
 			default: assert(0);

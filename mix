@@ -224,7 +224,7 @@ get()
 // expansion at source/machines.d(16,12)
 foresight()
 
-// expansion at source/app.d(20,2)
+// expansion at source/app.d(26,2)
 enum windowx=800;
 enum windowy=600;
 enum imagew=896;

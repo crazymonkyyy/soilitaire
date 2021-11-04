@@ -11,11 +11,17 @@ pair faststack(card c){
 	return pair(c,temp);
 }
 
+int rotateiter(int i){
+	i=i%4*13+i/4;
+	return i;
+}
+
 void main(){
 	mixin makecolors!();
 	loaddefualtcolors;
 	game_ game; game.init;
 	delayassign!int input;
+	int stacking=0;
 	//game.p.getpile(0).writeln;
 	mixin(import("drawing.mix"));
 	while (!WindowShouldClose()){
@@ -37,9 +43,17 @@ void main(){
 					game+=faststack(card(input.current));
 				}
 			}
-			if(IsKeyPressed(KeyboardKey.KEY_SPACE)){
+			if(IsKeyPressed(KeyboardKey.KEY_SPACE)||IsMouseButtonPressed(1)){
 				game.d++;
 				game.d.active.writeln;
+				stacking=-30;
+			}
+			if(IsKeyDown(KeyboardKey.KEY_SPACE)||IsMouseButtonDown(1)){
+				stacking++;
+				if(stacking%5==0 && stacking >0){
+					int i=stacking/10;
+					game+=faststack(card(rotateiter(i)));
+				}
 			}
 			if(IsKeyPressed(KeyboardKey.KEY_Z)){
 				//drawpile_.active.writeln;
