@@ -4,12 +4,25 @@ import trinary;
 enum f=tri(-1);
 enum idk=tri(0);
 enum t=tri(1);
+int dis(int a, int b){
+	if(a>b){return a-b;}
+	return b-a;
+}
+int lerp(int a,int b,float f){
+	if(f==0){return a;}
+	if(f==1){return b;}
+	return cast(int)(a*(1-f)+b*f);
+}
 struct pos{
 	int x; 
 	int y;
 	bool invalid(){
 		return x==-1 && y==-1;
 	}
+	int distence(pos a){
+		return x.dis(a.x)+y.dis(a.y);}
+	pos lerp(pos a,float f){
+		return pos(x.lerp(a.x,f),y.lerp(a.y,f));}
 }
 
 struct card{
@@ -23,6 +36,13 @@ struct card{
 		return (i/13)%4;}
 	auto color(){
 		return i/26;}
+	int distence(card a){
+		return p.distence(a.p);}
+	card lerp(card a,float f){
+		assert(i==a.i);
+		return card(i,p.lerp(a.p,f),h,flipped);
+	}
+	enum bullshit=card(-1);
 }
 struct pair{
 	card a;

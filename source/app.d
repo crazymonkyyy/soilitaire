@@ -23,8 +23,62 @@ void main(){
 	undo!(game_,10) game; game.init;
 	delayassign!int input;
 	int stacking=0;
+
 	//game.p.getpile(0).writeln;
 	mixin(import("drawing.mix"));
+	struct drawing_{
+		aristotlegoto!(card,10)[52] cards;//I commented out the assert in machines.counter to make this work.... Im afriad
+		aristotlegoto!(bool,.07)[52] flipping;
+		void init(card[63] inputs){
+			foreach(i;0..52){
+				flipping[i]+=inputs[i].flipped;
+				static foreach(z;0..10){flipping[i]++;}
+		}}
+		void draw__(card[63] inputs){
+			foreach(i;0..52){
+				cards[i].flipped=inputs[i].flipped;
+				if(cards[i].state.current.p!=inputs[i].p){//why are these if statements nessery?
+					cards[i]+=inputs[i];
+					cards[i]++;
+					//cards[i].writeln;
+					//auto temp=inputs[i].flipped;
+					inputs[i]=cards[i];
+					//inputs[i].flipped=temp;
+					inputs[i].h+=50;
+				}
+				if(flipping[i].state.current!=inputs[i].flipped){
+					//flipping[i].writeln;
+					//float(flipping[i]).writeln;
+					flipping[i]+=inputs[i].flipped;
+					flipping[i]++;
+					//cards[i].writeln;
+					inputs[i].flipped=flipping[i]>.5;
+					inputs[i].h+=50;
+				}
+			}
+			foreach(c;inputs.drawsort){
+				auto f(float f){
+					if(f<0){return 0;}
+					if(f>1){return 1;}//this is such a mess
+					if(f<.5){
+						return 1-f*2;
+					}else{
+						return f;
+					}
+				}
+				auto g(float g){
+					return g*g;
+				}
+				if(c.i<52&& c.i >=0){
+					draw(c,g(f(flipping[c.i])),0);
+				}else{
+					draw(c,1,0);
+				}
+			}
+		}
+	}
+	drawing_ drawer;
+	drawer.init(game);
 	while (!WindowShouldClose()){
 		BeginDrawing();
 			ClearBackground(background);
@@ -65,10 +119,10 @@ void main(){
 			if(IsKeyPressed(KeyboardKey.KEY_F11)){
 				changecolors;
 			}
-			foreach(c;game.drawsort){
-				draw(c,1,0);
-			}
-			
+			//foreach(c;game.drawsort){
+			//	draw(c,1,0);
+			//}
+			drawer.draw__(game);
 			//game.get.writeln;
 			//DrawFPS(10,10);
 		EndDrawing();
