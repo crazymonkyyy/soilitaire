@@ -8,6 +8,7 @@
 	},
 	"description": "A minimal D application.",
 	"dflags": [
+		"-i",
 		"-mixin=mix",
 		"-J=./source"
 	],

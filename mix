@@ -230,7 +230,58 @@ get()
 // expansion at source/machines.d(18,12)
 foresight
 
-// expansion at source/app.d(37,2)
+// expansion at 
+.object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
+
+// expansion at 
+.object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
+
+// expansion at /usr/include/dlang/dmd/std/functional.d(216,13)
+alias a = __a ;
+
+// expansion at /usr/include/dlang/dmd/std/functional.d(217,13)
+alias b = __b ;
+
+// expansion at /usr/include/dlang/dmd/std/functional.d(218,20)
+a == b
+
+// expansion at /usr/include/dlang/dmd/std/functional.d(216,13)
+alias a = __a ;
+
+// expansion at /usr/include/dlang/dmd/std/functional.d(217,13)
+alias b = __b ;
+
+// expansion at /usr/include/dlang/dmd/std/functional.d(218,20)
+a == b
+
+// expansion at source/setting.d(14,3)
+soundundo_file
+
+// expansion at source/setting.d(14,34)
+soundundo_file
+
+// expansion at source/setting.d(14,3)
+soundmove_file
+
+// expansion at source/setting.d(14,34)
+soundmove_file
+
+// expansion at source/setting.d(14,3)
+soundstackfile
+
+// expansion at source/setting.d(14,34)
+soundstackfile
+
+// expansion at source/setting.d(14,3)
+soundhappyfile
+
+// expansion at source/setting.d(14,34)
+soundhappyfile
+
+// expansion at /usr/include/dlang/dmd/std/internal/memory.d(32,18)
+onOutOfMemoryError();
+
+// expansion at source/app.d(48,2)
 enum windowx=800;
 enum windowy=600;
 enum imagew=896;

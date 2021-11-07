@@ -29,10 +29,21 @@ void main(){
 	Sound soundstack;
 	Sound soundhappy;
 	
-	soundundo = LoadSound("glass_006.ogg");
-	soundmove = LoadSound("click2.ogg");
-	soundstack= LoadSound("cardSlide6.ogg");
-	soundhappy= LoadSound("chipsStack2.ogg");
+	string soundundo_file;
+	string soundmove_file;
+	string soundstackfile;
+	string soundhappyfile;
+	import setting;
+	mixin setup!"themes";
+	void loadthemes(){
+		import std.string;
+		reload!"themes";
+		soundundo = LoadSound(soundundo_file.toStringz);
+		soundmove = LoadSound(soundmove_file.toStringz);
+		soundstack= LoadSound(soundstackfile.toStringz);
+		soundhappy= LoadSound(soundhappyfile.toStringz);
+	}
+	loadthemes();
 	//game.p.getpile(0).writeln;
 	mixin(import("drawing.mix"));
 	struct drawing_{
@@ -127,7 +138,10 @@ void main(){
 				PlaySound(soundundo);
 			}
 			if(IsKeyPressed(KeyboardKey.KEY_F10)){
-				//debug_= ! debug_;
+				import std.process;
+				auto config=Config.stderrPassThrough;
+				"xdg-open themes.conf".executeShell(null,config);
+				loadthemes();
 			}
 			if(IsKeyPressed(KeyboardKey.KEY_F11)){
 				changecolors;
