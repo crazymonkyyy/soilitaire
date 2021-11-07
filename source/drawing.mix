@@ -18,6 +18,12 @@ InitWindow(windowx, windowy, "Hello, Raylib-D!");
 SetWindowPosition(2000,0);
 SetTargetFPS(60);
 auto cards=LoadTexture("cardspixel.png");
+Texture[4] masks;
+masks[0]=LoadTexture("maskwhite.png");
+masks[1]=LoadTexture("maskblack.png");
+masks[2]=LoadTexture("maskblue_.png");
+masks[3]=LoadTexture("maskred__.png");
+auto mixedrender=LoadTexture("mixedrender.png");
 float cardscale=2;
 void draw(card c,float facing,float rot){
 	auto source=tile(c.rank,c.suit);
@@ -33,6 +39,40 @@ void draw(card c,float facing,float rot){
 	int faceoffset=faceoffset_.to!int;
 	//if(g.selectable(c)){white=red;}
 	DrawTexturePro(cards,source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,white);
+}
+void draw2(card c,float facing,float rot){
+	auto source=tile(c.rank,c.suit);
+	if(! c.flipped){source=tile(13,1);}
+	auto white=brightwhite;
+	if(c.color>=2){white=hightlight;c.i-=52;}
+	if(c.i<=-100){
+		source=tile(13,0);
+		white=hightlight;
+	}
+	auto faceoffset_=cardw*(1-facing);
+	faceoffset_/=2;
+	int faceoffset=faceoffset_.to!int;
+	//if(g.selectable(c)){white=red;}
+	DrawTexturePro(masks[0],source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,white);
+	DrawTexturePro(masks[1],source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,selection);
+	DrawTexturePro(masks[2],source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,blue);
+	DrawTexturePro(masks[3],source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,red);
+}
+void draw3(card c,float facing,float rot){
+	auto source=tile(c.rank,c.suit);
+	if(! c.flipped){source=tile(13,1);}
+	auto white=brightwhite;
+	if(c.color>=2){white=hightlight;c.i-=52;}
+	if(c.i<=-100){
+		source=tile(13,0);
+		white=hightlight;
+	}
+	auto faceoffset_=cardw*(1-facing);
+	faceoffset_/=2;
+	int faceoffset=faceoffset_.to!int;
+	//if(g.selectable(c)){white=red;}
+	DrawTexturePro(mixedrender,source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,white);
+	DrawTexturePro(masks[2],source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,green);
 }
 bool clicked(card c){
 	auto rec=dest(c.p.x,c.p.y,cardscale,cardscale);

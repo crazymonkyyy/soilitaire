@@ -23,7 +23,16 @@ void main(){
 	undo!(game_,10) game; game.init;
 	delayassign!int input;
 	int stacking=0;
-
+	InitAudioDevice();
+	Sound soundundo;
+	Sound soundmove;
+	Sound soundstack;
+	Sound soundhappy;
+	
+	soundundo = LoadSound("glass_006.ogg");
+	soundmove = LoadSound("click2.ogg");
+	soundstack= LoadSound("cardSlide6.ogg");
+	soundhappy= LoadSound("chipsStack2.ogg");
 	//game.p.getpile(0).writeln;
 	mixin(import("drawing.mix"));
 	struct drawing_{
@@ -46,15 +55,15 @@ void main(){
 					//inputs[i].flipped=temp;
 					inputs[i].h+=50;
 				}
-				if(flipping[i].state.current!=inputs[i].flipped){
+				//if(flipping[i].state.current!=inputs[i].flipped){
 					//flipping[i].writeln;
 					//float(flipping[i]).writeln;
 					flipping[i]+=inputs[i].flipped;
 					flipping[i]++;
 					//cards[i].writeln;
 					inputs[i].flipped=flipping[i]>.5;
-					inputs[i].h+=50;
-				}
+					//inputs[i].h+=50;
+				//}
 			}
 			foreach(c;inputs.drawsort){
 				auto f(float f){
@@ -70,9 +79,9 @@ void main(){
 					return g*g;
 				}
 				if(c.i<52&& c.i >=0){
-					draw(c,g(f(flipping[c.i])),0);
+					draw3(c,g(f(flipping[c.i])),0);
 				}else{
-					draw(c,1,0);
+					draw3(c,1,0);
 				}
 			}
 		}
@@ -93,25 +102,29 @@ void main(){
 				input++;
 				input+=click.i;
 				if(input.current!=input.future){
+					PlaySound(soundstack);
 					game+=pair(card(input.current),card(input.future));
 				}else{
+					PlaySound(soundhappy);
 					game+=faststack(card(input.current));
 				}
 			}
 			if(IsKeyPressed(KeyboardKey.KEY_SPACE)||IsMouseButtonPressed(1)){
-				game.d++;
-				game.d.active.writeln;
+				PlaySound(soundmove);
+				game+=magicpair;
 				stacking=-30;
 			}
 			if(IsKeyDown(KeyboardKey.KEY_SPACE)||IsMouseButtonDown(1)){
 				stacking++;
-				if(stacking%5==0 && stacking >0){
+				if(stacking%10==0 && stacking >0){
+					PlaySound(soundhappy);
 					int i=stacking/10;
 					game+=faststack(card(rotateiter(i)));
 				}
 			}
 			if(IsKeyPressed(KeyboardKey.KEY_Z)){
 				game--;
+				PlaySound(soundundo);
 			}
 			if(IsKeyPressed(KeyboardKey.KEY_F10)){
 				//debug_= ! debug_;

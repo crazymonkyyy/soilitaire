@@ -50,7 +50,7 @@ struct pair{
 	enum bullshit=pair(card(-1),card(-1));
 }
 alias zone=intstore;
-
+enum magicpair=pair(card(-1337),card(-1337));
 bool canstack1(pair p){
 	if(p.b.i<=-99){return true;}
 	return p.a.rank+1==p.b.rank && p.a.color != p.b.color;
@@ -282,11 +282,12 @@ struct game_{
 		}
 	}
 	void give(pair pair_){
+		if(pair_==magicpair){d++; return;}
 		//import std.stdio;pair_.writeln;
-		stackstyle(pair_).writeln;
-		pair_.a.rank.writeln("rank");
-		pair_.a.suit.writeln("suit");
-		pair_.a.color.writeln("color");
+		//stackstyle(pair_).writeln;
+		//pair_.a.rank.writeln("rank");
+		//pair_.a.suit.writeln("suit");
+		//pair_.a.color.writeln("color");
 		switch(stackstyle(pair_).to!int){
 			case 0:return;
 			case 1:

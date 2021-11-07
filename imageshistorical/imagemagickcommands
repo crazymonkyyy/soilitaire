@@ -1,0 +1,22 @@
+monkyyy@no ~/src/solitaire (git)-[master] % magick cardspixel.png -color-threshold 'sRGB(245,44,78)-
+130 monkyyy@no ~/src/solitaire (git)-[master] % magick cardspixel.png -color-threshold 'sRGB(245,44,78)-sRGB(245,44,78)' red.png
+monkyyy@no ~/src/solitaire (git)-[master] % magick red.png -transparentRGB(0,0,0)
+zsh: unknown file attribute: 0
+1 monkyyy@no ~/src/solitaire (git)-[master] % magick red.png -transparent RGB(0,0,0)
+zsh: unknown file attribute: 0
+1 monkyyy@no ~/src/solitaire (git)-[master] % magick red.png -transparent sRGB(0,0,0)
+zsh: unknown file attribute: 0
+1 monkyyy@no ~/src/solitaire (git)-[master] % magick red.png -transparent 'sRGB(0,0,0)'
+magick: MissingArgument `-transparent' at CLI arg 2 @ fatal/magick-cli.c/ProcessCommandOptions/447.
+11 monkyyy@no ~/src/solitaire (git)-[master] % magick red.png -transparent "rgb(0,0,0)"
+magick: MissingArgument `-transparent' at CLI arg 2 @ fatal/magick-cli.c/ProcessCommandOptions/447.
+11 monkyyy@no ~/src/solitaire (git)-[master] % magick convert red.png -transparent "rgb(0,0,0)"
+convert:  `rgb(0,0,0)' @ error/convert.c/ConvertImageCommand/3319.
+1 monkyyy@no ~/src/solitaire (git)-[master] % magick convert red.png -transparent "rgb(0,0,0)" red2.png
+monkyyy@no ~/src/solitaire (git)-[master] % magick convert cardspixel.png +transparent "rgb(199,215,236)" blue.png
+monkyyy@no ~/src/solitaire (git)-[master] % magick convert cardspixel.png +transparent "rgb(77,87,102)" black.png
+monkyyy@no ~/src/solitaire (git)-[master] % magick convert cardspixel.png +transparent "rgb(255,255,255)" white.png
+monkyyy@no ~/src/solitaire (git)-[master] % magick convert cardspixel.png +transparent "rgb(245,44,78)" red3.png
+monkyyy@no ~/src/solitaire (git)-[master] % magick convert cardspixel.png +transparent "rgb(245,44,78)" red3.png
+
+

@@ -1,4 +1,4 @@
-// expansion at /usr/include/dlang/dmd/std/format/internal/write.d(1990,40)
+// expansion at /usr/include/dlang/dmd/std/format/internal/write.d(1962,40)
 (in ref int a) => a
 
 // expansion at source/machines.d(10,12)
@@ -16,7 +16,7 @@ foresight
 // expansion at source/machines.d(10,12)
 get()
 
-// expansion at /usr/include/dlang/dmd/std/algorithm/iteration.d(3262,13)
+// expansion at /usr/include/dlang/dmd/std/algorithm/iteration.d(3599,13)
 
             // Skip over empty subranges.
             while (!_items.empty && _items.front.empty)
@@ -39,7 +39,7 @@ get()
             }
         
 
-// expansion at /usr/include/dlang/dmd/std/algorithm/iteration.d(3290,17)
+// expansion at /usr/include/dlang/dmd/std/algorithm/iteration.d(3627,17)
 
             // Skip over empty subranges.
             while (!_items.empty && _items.front.empty)
@@ -149,12 +149,6 @@ alias staticMap = AliasSeq!(F!(Args[0]),F!(Args[1]),F!(Args[2]),F!(Args[3]),F!(A
 // expansion at /usr/include/dlang/dmd/std/meta.d(794,9)
 alias staticMap = AliasSeq!(F!(Args[0]),F!(Args[1]),);
 
-// expansion at /usr/include/dlang/dmd/std/functional.d(472,37)
-a < b
-
-// expansion at /usr/include/dlang/dmd/std/functional.d(475,32)
-a < b
-
 // expansion at /usr/include/dlang/dmd/std/functional.d(446,16)
 cast(T)a < cast(T) b
 
@@ -170,9 +164,6 @@ a == b
 // expansion at 
 .object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
 
-// expansion at 
-.object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
-
 // expansion at /usr/include/dlang/dmd/std/functional.d(216,13)
 alias a = __a ;
 
@@ -239,7 +230,7 @@ get()
 // expansion at source/machines.d(18,12)
 foresight
 
-// expansion at source/app.d(28,2)
+// expansion at source/app.d(37,2)
 enum windowx=800;
 enum windowy=600;
 enum imagew=896;
@@ -260,6 +251,12 @@ InitWindow(windowx, windowy, "Hello, Raylib-D!");
 SetWindowPosition(2000,0);
 SetTargetFPS(60);
 auto cards=LoadTexture("cardspixel.png");
+Texture[4] masks;
+masks[0]=LoadTexture("maskwhite.png");
+masks[1]=LoadTexture("maskblack.png");
+masks[2]=LoadTexture("maskblue_.png");
+masks[3]=LoadTexture("maskred__.png");
+auto mixedrender=LoadTexture("mixedrender.png");
 float cardscale=2;
 void draw(card c,float facing,float rot){
 	auto source=tile(c.rank,c.suit);
@@ -275,6 +272,40 @@ void draw(card c,float facing,float rot){
 	int faceoffset=faceoffset_.to!int;
 	//if(g.selectable(c)){white=red;}
 	DrawTexturePro(cards,source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,white);
+}
+void draw2(card c,float facing,float rot){
+	auto source=tile(c.rank,c.suit);
+	if(! c.flipped){source=tile(13,1);}
+	auto white=brightwhite;
+	if(c.color>=2){white=hightlight;c.i-=52;}
+	if(c.i<=-100){
+		source=tile(13,0);
+		white=hightlight;
+	}
+	auto faceoffset_=cardw*(1-facing);
+	faceoffset_/=2;
+	int faceoffset=faceoffset_.to!int;
+	//if(g.selectable(c)){white=red;}
+	DrawTexturePro(masks[0],source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,white);
+	DrawTexturePro(masks[1],source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,selection);
+	DrawTexturePro(masks[2],source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,blue);
+	DrawTexturePro(masks[3],source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,red);
+}
+void draw3(card c,float facing,float rot){
+	auto source=tile(c.rank,c.suit);
+	if(! c.flipped){source=tile(13,1);}
+	auto white=brightwhite;
+	if(c.color>=2){white=hightlight;c.i-=52;}
+	if(c.i<=-100){
+		source=tile(13,0);
+		white=hightlight;
+	}
+	auto faceoffset_=cardw*(1-facing);
+	faceoffset_/=2;
+	int faceoffset=faceoffset_.to!int;
+	//if(g.selectable(c)){white=red;}
+	DrawTexturePro(mixedrender,source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,white);
+	DrawTexturePro(masks[2],source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,green);
 }
 bool clicked(card c){
 	auto rec=dest(c.p.x,c.p.y,cardscale,cardscale);
@@ -349,7 +380,7 @@ cast(T)a < cast(T) b
                 }
             
 
-// expansion at /usr/include/dlang/dmd/std/stdio.d(5207,31)
+// expansion at /usr/include/dlang/dmd/std/stdio.d(5219,31)
 core.stdc.stdio.stdin
 
 // expansion at /usr/include/dlang/dmd/core/atomic.d(557,9)
@@ -361,7 +392,7 @@ core.stdc.stdio.stdin
 // expansion at /usr/include/dlang/dmd/core/atomic.d(557,9)
 *cast(T*)&val+=mod
 
-// expansion at /usr/include/dlang/dmd/std/stdio.d(5207,31)
+// expansion at /usr/include/dlang/dmd/std/stdio.d(5219,31)
 core.stdc.stdio.stdout
 
 // expansion at /usr/include/dlang/dmd/core/atomic.d(557,9)
@@ -373,7 +404,7 @@ core.stdc.stdio.stdout
 // expansion at /usr/include/dlang/dmd/core/atomic.d(557,9)
 *cast(T*)&val+=mod
 
-// expansion at /usr/include/dlang/dmd/std/stdio.d(5207,31)
+// expansion at /usr/include/dlang/dmd/std/stdio.d(5219,31)
 core.stdc.stdio.stderr
 
 // expansion at /usr/include/dlang/dmd/core/atomic.d(557,9)
@@ -381,12 +412,6 @@ core.stdc.stdio.stderr
 
 // expansion at /usr/include/dlang/dmd/core/atomic.d(557,9)
 *cast(T*)&val-=mod
-
-// expansion at /usr/include/dlang/dmd/std/functional.d(472,37)
-a < b
-
-// expansion at /usr/include/dlang/dmd/std/functional.d(475,32)
-a < b
 
 // expansion at /usr/include/dlang/dmd/std/functional.d(446,16)
 cast(T)a < cast(T) b
@@ -584,7 +609,7 @@ lhs == rhs
 // expansion at /usr/include/dlang/dmd/std/typecons.d(560,31)
 lhs == rhs
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7003,17)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7004,17)
 
             static if (getValue)
                 grapheme ~= ch;
@@ -603,152 +628,152 @@ alias staticMap = AliasSeq!(F!(Args[0]),F!(Args[1]),F!(Args[2]),);
 // expansion at 
 .object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7020,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7021,21)
 
     case '\u0000':..case '\u0008':case '\u000E':..case '\u001F':case '\u007F':..
     case '\u0084':case '\u0086':..case '\u009F': case '\u0009':..case '\u000C': case '\u0085':
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7029,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7030,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7033,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7034,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7039,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7040,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7043,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7044,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7048,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7049,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7055,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7056,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7059,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7060,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7067,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7068,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7081,13)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7082,13)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/range/package.d(4942,16)
+// expansion at /usr/include/dlang/dmd/std/range/package.d(4943,16)
 typeof(return)(ranges[0].save, ranges[1].save, ranges[2].save)
 
-// expansion at /usr/include/dlang/dmd/std/range/package.d(4950,16)
+// expansion at /usr/include/dlang/dmd/std/range/package.d(4951,16)
 typeof(return)(ranges[0].front, ranges[1].front, ranges[2].front)
 
 // expansion at 
 .object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7003,17)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7004,17)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7020,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7021,21)
 
     case '\u0000':..case '\u0008':case '\u000E':..case '\u001F':case '\u007F':..
     case '\u0084':case '\u0086':..case '\u009F': case '\u0009':..case '\u000C': case '\u0085':
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7029,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7030,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7033,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7034,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7039,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7040,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7043,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7044,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7048,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7049,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7055,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7056,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7059,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7060,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7067,21)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7068,21)
 
             static if (getValue)
                 grapheme ~= ch;
             range.popFront();
         
 
-// expansion at /usr/include/dlang/dmd/std/uni/package.d(7081,13)
+// expansion at /usr/include/dlang/dmd/std/uni/package.d(7082,13)
 
             static if (getValue)
                 grapheme ~= ch;
@@ -1114,12 +1139,6 @@ alias b = __b ;
 
 // expansion at /usr/include/dlang/dmd/std/functional.d(218,20)
 a == b
-
-// expansion at 
-.object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
-
-// expansion at 
-.object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
 
 // expansion at 
 .object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
