@@ -17,13 +17,15 @@ int rotateiter(int i){
 }
 
 void main(){
-	mixin makecolors!();
-	loaddefualtcolors;
 	import undomachine;
 	undo!(game_,10) game; game.init;
 	delayassign!int input;
 	int stacking=0;
 	InitAudioDevice();
+	int cardhighlight;
+	string themename;
+	int rendermode;
+	
 	Sound soundundo;
 	Sound soundmove;
 	Sound soundstack;
@@ -35,6 +37,7 @@ void main(){
 	string soundhappyfile;
 	import setting;
 	mixin setup!"themes";
+	mixin makecolors!("solarized-dark.yaml",);
 	void loadthemes(){
 		import std.string;
 		reload!"themes";
@@ -42,6 +45,7 @@ void main(){
 		soundmove = LoadSound(soundmove_file.toStringz);
 		soundstack= LoadSound(soundstackfile.toStringz);
 		soundhappy= LoadSound(soundhappyfile.toStringz);
+		colors=parsecolors(themename);
 	}
 	loadthemes();
 	//game.p.getpile(0).writeln;
@@ -102,6 +106,10 @@ void main(){
 	while (!WindowShouldClose()){
 		BeginDrawing();
 			ClearBackground(background);
+			if(IsKeyDown(KeyboardKey.KEY_F1)){
+				DrawTexture(helpz,0,0,Colors.WHITE);
+				goto exit;
+			}
 			if(IsMouseButtonPressed(0)){
 				card click;
 				click.i=-1;
@@ -152,6 +160,7 @@ void main(){
 			drawer.draw__(game);
 			//game.get.writeln;
 			//DrawFPS(10,10);
+			exit:
 		EndDrawing();
 	}
 	CloseWindow();

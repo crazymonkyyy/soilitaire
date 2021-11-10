@@ -76,6 +76,7 @@ card[] drawpile_(zone z,int which, int many){
 	while(i<which){
 		o~=card(z[i],pos(250,0),5,false); i++;}
 	foreach(j;0..many){
+		if(i>=z.length){break;}
 		o~=card(z[i],pos(100+j*33,0),j,true); i++;}
 	while(i<z.length){
 		o~=card(z[i],pos(0,0),0,false); i++;}
@@ -108,7 +109,7 @@ struct drawpile{
 	}
 	int active(){
 		if(draw.store.length==0 || many==0){return -1;}
-		if(which+many-1>=draw.store.length){"Im confused".writeln;return -1;}
+		if(which+many-1>=draw.store.length){return draw.store[$-1];}
 		return draw.store[which+many-1];
 	}
 	tri valid(pair p){

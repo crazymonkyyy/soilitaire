@@ -74,7 +74,7 @@ mixin template makecolors(
 		} catch(Throwable){
 			import std.stdio;
 			writeln(file_~": FAILED");
-			return colors;
+			return parsecolors(defaultfile);
 	}}
 	void loaddefualtcolors(){
 		colors=parsecolors(defaultfile);

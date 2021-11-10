@@ -1,6 +1,5 @@
-themename="solarized-dark.yaml";
-cardhighlight=7;
-rendermode=1;
+themename="icy.yaml";
+cardhighlight=4;
 soundundo_file="glass_006.ogg";
 soundmove_file="click2.ogg";
 soundstackfile="cardSlide6.ogg";
