@@ -55,5 +55,6 @@ struct undo(M,int maxundos){
 		game.init;
 		gameold=game;
 	}
+	bool isdone(){return game.isdone;}
 	mixin machineopoverloads!();
 }

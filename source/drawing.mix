@@ -41,7 +41,7 @@ void draw(card c,float facing,float rot){
 	//if(g.selectable(c)){white=red;}
 	DrawTexturePro(cards,source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,white);
 }
-void draw2(card c,float facing,float rot){
+void draw3(card c,float facing,float rot){
 	auto source=tile(c.rank,c.suit);
 	if(! c.flipped){source=tile(13,1);}
 	auto white=brightwhite;
@@ -59,7 +59,7 @@ void draw2(card c,float facing,float rot){
 	DrawTexturePro(masks[2],source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,colors[cardhighlight%8+8]);
 	DrawTexturePro(masks[3],source,dest(c.p.x+faceoffset,c.p.y,facing*cardscale,cardscale),Vector2(0,0),rot,red);
 }
-void draw3(card c,float facing,float rot){
+void draw2(card c,float facing,float rot){
 	auto source=tile(c.rank,c.suit);
 	if(! c.flipped){source=tile(13,1);}
 	auto white=brightwhite;

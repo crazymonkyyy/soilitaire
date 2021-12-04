@@ -139,7 +139,7 @@ struct piles{
 	zone[7] zones;
 	int[7] depths;
 	ref auto getpile(int i){
-		return pile_(zones[i],depths[i],i*100,150,25);}
+		return pile_(zones[i],depths[i],i*112,150,25);}
 	auto get(){
 		struct p{
 			piles* parent;
@@ -159,7 +159,7 @@ struct piles{
 		enum zone z=zone([-100]);
 		card[7] o;
 		foreach(i;0..7){
-			o[i]=pile_(z,-100,i*100,150,25)[0];
+			o[i]=pile_(z,-100,i*112,150,25)[0];
 			o[i].i-=i;
 			o[i].h=-10;
 			o[i].flipped=true;
@@ -253,6 +253,7 @@ struct game_{
 	drawpile d;
 	piles p;
 	endzone e;
+	bool done=false;
 	card[63] get(){
 		card[63] o;
 		foreach(c;chain(d.get,p.get,e.get)){
@@ -320,6 +321,9 @@ struct game_{
 			default: assert(0);
 		}
 		p.fliptops;
+	}
+	bool isdone(){
+		return done||e.z.length==52;
 	}
 	mixin machineopoverloads!();
 }
